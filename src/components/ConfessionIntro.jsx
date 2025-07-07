@@ -29,7 +29,6 @@ export default function ConfessionIntro({ onComplete }) {
             >
               <Heart className="w-16 h-16 text-pink-400 fill-current mx-auto" />
 
-              {/* Cute sparkles around heart */}
               {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
@@ -56,24 +55,24 @@ export default function ConfessionIntro({ onComplete }) {
             </motion.div>
 
             <div className="space-y-6">
-              <h2 className="text-2xl md:text-4xl py-1 font-bold bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent">
-                I have something magical to tell you...
+              <h2 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent">
+                I’ve been hiding something sweet...
               </h2>
 
               <motion.p
                 animate={{ opacity: [0.8, 1, 0.8] }}
                 transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-                className="text-lg md:text-xl text-pink-200 leading-relaxed"
+                className="text-base md:text-lg text-pink-200 leading-relaxed"
               >
-                Something I've been keeping in my heart, waiting for the perfect moment to share. Are you ready to hear
-                my secret? 💕
+                There’s a little secret I’ve been saving for the right moment.
+                Want to know what it is? 💖
               </motion.p>
             </div>
 
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.8 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onComplete}
@@ -81,7 +80,7 @@ export default function ConfessionIntro({ onComplete }) {
             >
               <span className="relative z-10 flex items-center gap-2">
                 <Heart className="w-5 h-5 fill-current" />
-                Tell me your secret ✨
+                Show me
                 <Heart className="w-5 h-5 fill-current" />
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

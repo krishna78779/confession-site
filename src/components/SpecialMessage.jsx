@@ -12,10 +12,15 @@ export default function SpecialMessage({ onComplete }) {
   const messageRef = useRef(null)
 
   const fullMessage = `My Dearest Love,
+
 From the moment our eyes first met, I knew my life would never be the same. You walked into my world like a beautiful dream, bringing light to places I didn't even know were dark.
+
 Every day with you feels like magic. Your smile brightens my darkest days, your laugh is the sweetest melody I've ever heard, and your love is the greatest gift I could ever receive.
+
 I want to spend forever making you smile, forever holding your hand, forever being the reason you believe in love.
+
 Will you be mine forever and always?
+
 With all my love,
 Your devoted heart 💕`
 
@@ -43,10 +48,13 @@ Your devoted heart 💕`
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen flex flex-col justify-center text-white px-4 py-6 md:px-6 md:py-8"
+      className="min-h-screen flex flex-col justify-center text-white px-4 py-4 md:px-6 md:py-6"
     >
-      <div className="flex flex-col max-w-4xl mx-auto w-full">
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 lg:p-12 border border-white/10 shadow-2xl max-h">
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: showButton ? -6 : 0 }}
+        className="flex flex-col max-w-4xl mx-auto w-full">
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 lg:p-12 border border-white/10 shadow-2xl">
           <div className="text-center mb-6">
             <motion.div
               animate={{
@@ -65,6 +73,7 @@ Your devoted heart 💕`
 
           <div
             ref={messageRef}
+            className="max-h-[60vh] overflow-y-auto pr-2 scroll-smooth transition-all duration-500"
           >
             <pre className="text-base md:text-lg lg:text-xl font-light leading-relaxed whitespace-pre-line text-pink-100 text-left">
               {displayedText}
@@ -80,7 +89,7 @@ Your devoted heart 💕`
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-center mt-6"
+            className="text-center mt-8"
           >
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -88,16 +97,16 @@ Your devoted heart 💕`
               onClick={onComplete}
               className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 md:px-10 py-4 rounded-full font-semibold text-base md:text-lg shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
             >
-              <span className="relative z-10 flex items-center gap-2 md:gap-3">
+              <span className="relative z-10 flex items-center gap-1 md:gap-2">
                 <Heart className="w-4 h-4 md:w-5 md:h-5 fill-current" />
-                See Our Beautiful Memories
+                Listen to My Voice
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </motion.button>
           </motion.div>
         )}
-      </div>
+      </motion.div>
     </motion.div>
   )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { AnimatePresence } from "motion/react"
+import { motion, AnimatePresence } from "motion/react"
 import Loader from "@/components/Loader"
 import SecretCode from "@/components/SecretCode"
 import HeartReveal from "@/components/HeartReveal"
@@ -56,11 +56,22 @@ export default function ConfessionSite() {
           <ConfessionIntro key="confessionIntro" onComplete={() => handleScreenChange("message")} />
         )}
         {currentScreen === "message" && (
-          <SpecialMessage key="message" onComplete={() => handleScreenChange("photos")} />
+          <SpecialMessage key="message" onComplete={() => handleScreenChange("voiceNote")} />
         )}
-        {currentScreen === "photos" && <PhotoGallery key="photos" onComplete={() => handleScreenChange("voiceNote")} />}
         {currentScreen === "voiceNote" && <VoiceNote key="voiceNote" />}
+        {currentScreen === "photos" && <PhotoGallery key="photos" onComplete={() => handleScreenChange("voiceNote")} />}
       </AnimatePresence>
+      {/* Watermark */}
+      {/* <motion.div
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{
+          duration: 0.5,
+          delay: 1,
+        }}
+        className="fixed bottom-4 right-4 text-[13px] text-white/40 pointer-events-none select-none z-50 font-light">
+        @anujbuilds
+      </motion.div> */}
     </div>
   )
 }

@@ -85,10 +85,10 @@ export default function Loader({ onComplete }) {
 
             <motion.p
               animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
               className="text-lg text-pink-200 tracking-wide"
             >
-              A beautiful surprise is loading...
+              A beautiful surprise is loading...<span className="text-pink-100">💫</span>
             </motion.p>
           </div>
 

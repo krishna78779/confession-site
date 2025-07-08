@@ -1,23 +1,41 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, forwardRef, useImperativeHandle } from "react"
 
-export default function BackgroundMusic() {
+const BackgroundMusic = forwardRef((_, ref) => {
   const audioRef = useRef(null)
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = 0.8
+      audioRef.current.volume = 0.6 // Default volume
       audioRef.current.play().catch(() => {
-        // Auto-play failed, will try again on user interaction
+        // autoplay failed
       })
     }
   }, [])
 
+  useImperativeHandle(ref, () => ({
+    pause: () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+      }
+    },
+    resume: () => {
+      if (audioRef.current && audioRef.current.paused) {
+        audioRef.current.play().catch(() => {
+          // autoplay issue
+        })
+      }
+    },
+  }))
+
+
   return (
     <audio ref={audioRef} loop className="hidden">
-      <source src="/bg.mp3" type="audio/mpeg" />
+      <source src="/audio/bg.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
   )
-}
+})
+
+export default BackgroundMusic

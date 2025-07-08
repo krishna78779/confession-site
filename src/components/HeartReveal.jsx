@@ -146,7 +146,7 @@ export default function HeartReveal({ onComplete }) {
         >
           <div className="bg-white/10 backdrop-blur-xl rounded-2xl px-8 py-4 border border-white/20">
             <p className="text-3xl font-bold  bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent">
-              My heart opens for you... <span className="text-black">✨</span>
+              My heart opens for you...<span className="text-black">✨</span>
             </p>
           </div>
         </motion.div>

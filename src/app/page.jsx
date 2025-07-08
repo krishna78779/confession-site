@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import Loader from "@/components/Loader"
 import SecretCode from "@/components/SecretCode"
@@ -16,11 +16,21 @@ export default function ConfessionSite() {
   const [currentScreen, setCurrentScreen] = useState("loader")
   const [musicStarted, setMusicStarted] = useState(false)
 
+  const musicRef = useRef(null)
+
   const handleScreenChange = (screen) => {
     setCurrentScreen(screen)
     if (screen === "heartReveal" && !musicStarted) {
       setMusicStarted(true)
     }
+  }
+
+  const handleVoicePlay = () => {
+    musicRef.current?.pause()
+  }
+
+  const handleVoicePause = () => {
+    musicRef.current?.resume()
   }
 
   return (
@@ -42,7 +52,7 @@ export default function ConfessionSite() {
       {/* Cute floating elements */}
       <FloatingElements />
 
-      {/* {musicStarted && <BackgroundMusic />} */}
+      {musicStarted && <BackgroundMusic ref={musicRef} />}
 
       <AnimatePresence mode="wait">
         {currentScreen === "loader" && <Loader key="loader" onComplete={() => handleScreenChange("secretCode")} />}
@@ -58,20 +68,21 @@ export default function ConfessionSite() {
         {currentScreen === "message" && (
           <SpecialMessage key="message" onComplete={() => handleScreenChange("voiceNote")} />
         )}
-        {currentScreen === "voiceNote" && <VoiceNote key="voiceNote" />}
-        {currentScreen === "photos" && <PhotoGallery key="photos" onComplete={() => handleScreenChange("voiceNote")} />}
+        {currentScreen === "voiceNote" && <VoiceNote key="voiceNote" onComplete={() => handleScreenChange("photos")} onPlay={handleVoicePlay} onPause={handleVoicePause} />}
+        {currentScreen === "photos" && <PhotoGallery key="photos" />}
       </AnimatePresence>
+
       {/* Watermark */}
-      {/* <motion.div
+      <motion.div
         initial={{ x: 100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{
-          duration: 0.5,
+          duration: 2.5,
           delay: 1,
         }}
-        className="fixed bottom-4 right-4 text-[13px] text-white/40 pointer-events-none select-none z-50 font-light">
+        className="fixed bottom-4 right-4 text-[13px] text-white/40 pointer-events-none z-50 font-light">
         @anujbuilds
-      </motion.div> */}
+      </motion.div>
     </div>
   )
 }

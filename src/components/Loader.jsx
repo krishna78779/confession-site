@@ -88,7 +88,7 @@ export default function Loader({ onComplete }) {
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
               className="text-lg text-pink-200 tracking-wide"
             >
-              A beautiful surprise is loading...<span className="text-pink-100">💫</span>
+              A beautiful surprise is loading ...<span className="text-pink-100">💫</span>
             </motion.p>
           </div>
 

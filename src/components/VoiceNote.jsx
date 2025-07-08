@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion } from "motion/react"
 import { Play, Pause, Heart, Volume2, Mic, Sparkles, ArrowRight } from "lucide-react"
 
-export default function VoiceNote({ onComplete }) {
+export default function VoiceNote({ onPlay, onPause, onComplete }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef(null)
 
@@ -12,12 +12,37 @@ export default function VoiceNote({ onComplete }) {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause()
+        onPause?.()
       } else {
         audioRef.current.play()
+        onPlay?.()
       }
       setIsPlaying(!isPlaying)
     }
   }
+
+  const handleComplete = () => {
+    setIsPlaying(false)
+    audioRef.current.pause()
+    onPause() // resume background music
+    onComplete() // go to next screen
+  }
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.addEventListener("ended", () => {
+        setIsPlaying(false)
+        onPause()  // resume background music
+      })
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener("ended", () => { })
+      }
+    }
+  }, [])
+
 
   return (
     <motion.div
@@ -112,7 +137,7 @@ export default function VoiceNote({ onComplete }) {
             </motion.button>
 
             <audio ref={audioRef} onEnded={() => setIsPlaying(false)} className="hidden">
-              <source src="/voice.m4a" type="audio/mpeg" />
+              <source src="/audio/voice.mp3" type="audio/mpeg" />
               Your browser does not support the audio element.
             </audio>
 
@@ -128,19 +153,6 @@ export default function VoiceNote({ onComplete }) {
             </motion.div>
 
             <div className="pt-6 md:pt-8 border-t border-white/10 space-y-4 md:space-y-6">
-              {/* <motion.div
-                animate={{
-                  scale: [1, 1.05, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <Heart className="w-8 h-8 md:w-10 md:h-10 text-pink-400 fill-current mx-auto" />
-              </motion.div> */}
-
               <p className="text-white/80 text-base md:text-lg leading-relaxed">
                 Thank you for being the most incredible person in my life. You make every day feel like magic, every
                 moment feel like a dream come true. I love you beyond words, beyond time, beyond everything💕✨
@@ -157,12 +169,12 @@ export default function VoiceNote({ onComplete }) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={onComplete}
+            onClick={handleComplete}
             className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 md:px-10 py-4 rounded-full font-semibold text-base md:text-lg shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
           >
             <span className="relative z-10 flex items-center gap-1 md:gap-2">
               <Heart className="w-4 h-4 md:w-5 md:h-5 fill-current" />
-              See Our Beautiful Memories
+              View Memories
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
             </span>
             <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
